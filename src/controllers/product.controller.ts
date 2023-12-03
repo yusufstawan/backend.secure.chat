@@ -1,6 +1,14 @@
 import { type Request, type Response } from 'express'
 import { createProductValidation } from '../validations/product.validation'
 import { logger } from '../utils/logger'
+import { getProductFromDB } from '../services/product.service'
+
+interface ProductType {
+  product_id: string
+  name: string
+  price: number
+  size: string
+}
 
 export const createProduct = (req: Request, res: Response) => {
   const { error, value } = createProductValidation(req.body)
@@ -21,23 +29,15 @@ export const createProduct = (req: Request, res: Response) => {
   })
 }
 
-export const getProduct = (req: Request, res: Response) => {
-  const products = [
-    {
-      name: 'Sepatu',
-      price: 200000
-    },
-    {
-      name: 'Kaos',
-      price: 100000
-    }
-  ]
+export const getProduct = async (req: Request, res: Response) => {
+  const products: any = await getProductFromDB()
+
   const {
     params: { name }
   } = req
 
   if (name) {
-    const filterProduct = products.filter((product) => product.name === name)
+    const filterProduct = products.filter((product: ProductType) => product.name === name)
     if (filterProduct.length === 0) {
       logger.error('ERR = product - get', 'Product not found')
       return res.status(404).send({
