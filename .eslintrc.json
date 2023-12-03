@@ -12,5 +12,7 @@
   },
   "plugins": ["@typescript-eslint"],
   "ignorePatterns": ["**/node_modules/*", "**/build/*", "**/public/*", "**/tsconfig.json"],
-  "rules": {}
+  "rules": {
+    "@typescript-eslint/explicit-function-return-type": "off"
+  }
 }
