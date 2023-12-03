@@ -1,7 +1,12 @@
 import { type Request, type Response } from 'express'
-import { createProductValidation } from '../validations/product.validation'
+import { createProductValidation, updateProductValidation } from '../validations/product.validation'
 import { logger } from '../utils/logger'
-import { addProductToDB, getProductByIdFromDB, getProductFromDB } from '../services/product.service'
+import {
+  addProductToDB,
+  getProductByIdFromDB,
+  getProductFromDB,
+  updateProductByIdFromDB
+} from '../services/product.service'
 import { v4 as uuidv4 } from 'uuid'
 
 export const createProduct = async (req: Request, res: Response) => {
@@ -65,4 +70,30 @@ export const getProduct = async (req: Request, res: Response) => {
       data: products
     })
   }
+}
+
+export const updateProduct = async (req: Request, res: Response) => {
+  const {
+    params: { id }
+  } = req
+
+  const { error, value } = updateProductValidation(req.body)
+  if (error) {
+    logger.error('ERR = product - create', error.details[0].message)
+    return res.status(422).send({
+      status: false,
+      statusCode: 422,
+      message: error.details[0].message
+    })
+  }
+
+  try {
+    await updateProductByIdFromDB(id, value)
+    logger.info('Update product successful')
+    return res.status(200).send({
+      status: true,
+      statusCode: 200,
+      message: 'Update product successful'
+    })
+  } catch (error) {}
 }
