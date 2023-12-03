@@ -1,11 +1,11 @@
 ## On progress development
 
 ### install 
-npm install
+* npm install
 
 ### install husky
-npm run prepare
+* npm run prepare
 if linux error husky:
-git config advice.ignoredHook false
-chmod ug+x .husky/*
-chmod ug+X .git/hooks/*
+* git config advice.ignoredHook false
+* chmod ug+x .husky/*
+* chmod ug+X .git/hooks/*
