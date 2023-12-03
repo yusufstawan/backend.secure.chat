@@ -3,6 +3,7 @@ import { createProductValidation, updateProductValidation } from '../validations
 import { logger } from '../utils/logger'
 import {
   addProductToDB,
+  deleteProductByIdFromDB,
   getProductByIdFromDB,
   getProductFromDB,
   updateProductByIdFromDB
@@ -88,15 +89,57 @@ export const updateProduct = async (req: Request, res: Response) => {
   }
 
   try {
-    await updateProductByIdFromDB(id, value)
-    logger.info('Update product successful')
-    return res.status(200).send({
-      status: true,
-      statusCode: 200,
-      message: 'Update product successful'
-    })
+    const result = await updateProductByIdFromDB(id, value)
+    if (result) {
+      logger.info('Update product successful')
+      return res.status(200).send({
+        status: true,
+        statusCode: 200,
+        message: 'Update product successful'
+      })
+    } else {
+      logger.info('Data not found')
+      return res.status(404).send({
+        status: false,
+        statusCode: 404,
+        message: 'Data not found'
+      })
+    }
   } catch (error) {
     logger.error('ERR = product - update', error)
+    return res.status(422).send({
+      status: false,
+      statusCode: 422,
+      message: error
+    })
+  }
+}
+
+export const deleteProduct = async (req: Request, res: Response) => {
+  const {
+    params: { id }
+  } = req
+
+  try {
+    const result = await deleteProductByIdFromDB(id)
+
+    if (result) {
+      logger.info('Delete product successful')
+      return res.status(200).send({
+        status: true,
+        statusCode: 200,
+        message: 'Delete product successful'
+      })
+    } else {
+      logger.info('Data not found')
+      return res.status(404).send({
+        status: false,
+        statusCode: 404,
+        message: 'Data not found'
+      })
+    }
+  } catch (error) {
+    logger.error('ERR = product - delete', error)
     return res.status(422).send({
       status: false,
       statusCode: 422,
