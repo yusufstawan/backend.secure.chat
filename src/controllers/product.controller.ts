@@ -30,10 +30,10 @@ export const createProduct = async (req: Request, res: Response) => {
     })
   } catch (error) {
     logger.error('ERR = product - create', error)
-    return res.status(500).send({
+    return res.status(422).send({
       status: false,
-      statusCode: 500,
-      message: 'Internal server error'
+      statusCode: 422,
+      message: error
     })
   }
 }
@@ -79,7 +79,7 @@ export const updateProduct = async (req: Request, res: Response) => {
 
   const { error, value } = updateProductValidation(req.body)
   if (error) {
-    logger.error('ERR = product - create', error.details[0].message)
+    logger.error('ERR = product - update', error.details[0].message)
     return res.status(422).send({
       status: false,
       statusCode: 422,
@@ -95,5 +95,12 @@ export const updateProduct = async (req: Request, res: Response) => {
       statusCode: 200,
       message: 'Update product successful'
     })
-  } catch (error) {}
+  } catch (error) {
+    logger.error('ERR = product - update', error)
+    return res.status(422).send({
+      status: false,
+      statusCode: 422,
+      message: error
+    })
+  }
 }
