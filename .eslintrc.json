@@ -11,7 +11,7 @@
     "project": ["**/tsconfig.json"]
   },
   "plugins": ["@typescript-eslint"],
-  "ignorePatterns": ["**/node_modules/*", "**/build/*", "**/public/*", "**/tsconfig.json"],
+  "ignorePatterns": ["**/node_modules/*", "**/build/*", "**/public/*", "**/tsconfig.json", "jest.config.js"],
   "rules": {
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/strict-boolean-expressions": "off",
