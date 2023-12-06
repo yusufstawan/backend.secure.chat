@@ -63,7 +63,7 @@ export const getProduct = async (req: Request, res: Response) => {
       })
     }
   } else {
-    const products: any = await getProductFromDB()
+    const products: any = await getProductFromDB(req.body.page, req.body.limit)
     logger.info('Success get product data')
     return res.status(200).send({
       status: true,

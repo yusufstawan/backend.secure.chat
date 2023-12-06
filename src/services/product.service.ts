@@ -13,9 +13,11 @@ export const addProductToDB = async (payload: ProductType) => {
     })
 }
 
-export const getProductFromDB = async () => {
+export const getProductFromDB = async (page: number, limit: number) => {
   return await productModel
     .find()
+    .skip((page - 1) * limit)
+    .limit(limit)
     .then((data) => {
       return data
     })
