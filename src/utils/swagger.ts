@@ -1,11 +1,11 @@
-import swaggerJsdoc from 'swagger-jsdoc'
+import swaggerJSDoc from 'swagger-jsdoc'
 import swaggerUi from 'swagger-ui-express'
 import { type Application } from 'express'
 
 const swaggerDocumentation = (app: Application) => {
   const options = {
-    definition: {
-      openapi: '3.1.0',
+    swaggerDefinition: {
+      openapi: '3.0.0',
       info: {
         title: 'Backend Secure Chat API',
         version: '0.1.0',
@@ -21,12 +21,19 @@ const swaggerDocumentation = (app: Application) => {
         }
       ]
     },
-    apis: ['../routes/*.ts']
+    apis: ['src/routes/*.ts', 'src/validations/*.ts']
   }
 
-  const specs = swaggerJsdoc(options)
+  const specs = swaggerJSDoc(options)
 
-  app.use('/docs', swaggerUi.serve, swaggerUi.setup(specs, { explorer: true }))
+  app.use(
+    '/docs',
+    swaggerUi.serve,
+    swaggerUi.setup(specs, {
+      explorer: true,
+      customCssUrl: 'https://cdn.jsdelivr.net/npm/swagger-ui-themes@3.0.0/themes/3.x/theme-feeling-blue.css'
+    })
+  )
 }
 
 export default swaggerDocumentation

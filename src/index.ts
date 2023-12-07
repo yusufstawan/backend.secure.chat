@@ -11,5 +11,5 @@ const port: number = 4000
 swaggerDocumentation(app)
 
 app.listen(port, () => {
-  logger.info(`Server running on port ${port}`)
+  logger.info(`Server running on port http://localhost:${port}`)
 })
