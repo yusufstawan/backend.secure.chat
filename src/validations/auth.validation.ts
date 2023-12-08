@@ -29,3 +29,15 @@ export const refreshSessionValidation = (payload: UserType) => {
 
   return schema.validate(payload)
 }
+
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *   CreateUser:
+ *    type: object
+ *    required:
+ *      - email
+ *      - name
+ *      - password
+ */

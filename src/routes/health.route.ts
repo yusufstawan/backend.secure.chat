@@ -15,26 +15,24 @@ HealthRouter.get('/', (req: Request, res: Response, next: NextFunction) => {
 /**
  * @swagger
  * tags:
- *   name: Books
- *   description: The books managing API
- * /books:
- *   post:
- *     summary: Create a new book
- *     tags: [Books]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Book'
+ *   name: Health
+ *   description: Health check
+ * /health:
+ *   get:
+ *     summary: Health check
+ *     tags: [Health]
  *     responses:
  *       200:
- *         description: The created book.
+ *         description: The health check was successful
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Book'
- *       500:
- *         description: Some server error
- *
+ *               type: object
+ *             properties:
+ *               status:
+ *                type: boolean
+ *             statusCode:
+ *               type: number
+ *             data:
+ *               type: string
  */
